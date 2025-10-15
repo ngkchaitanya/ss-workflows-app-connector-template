@@ -1,0 +1,3 @@
+module_settings:
+  module_name: "Google Sheets - Read Rows"
+  module_description: "Read rows from Google Sheet"

@@ -1,0 +1,54 @@
+{
+  "metadata": { "workflows_module_schema_version": "1.0.0" },
+  "fields": [
+    {
+      "id": "spreadsheet_id",
+      "type": "object",
+      "label": "Spreadsheet",
+      "ui_options": { "ui_widget": "SelectWidget", "refresh_on_change": true, "placeholder": "Select a spreadsheet" },
+      "choices": { "values": [] },
+      "content": {
+        "type": ["managed"],
+        "content_objects": [{ "id": "spreadsheets" }]
+      },
+      "validation": { "required": true }
+    },
+    {
+      "id": "sheet_name",
+      "type": "object",
+      "label": "Sheet / Tab",
+      "ui_options": { "ui_widget": "SelectWidget", "placeholder": "Select a tab" },
+      "choices": { "values": [] },
+      "content": {
+        "type": ["managed"],
+        "content_objects": [
+          { "id": "sheets", "content_object_depends_on_fields": [{ "id": "spreadsheet_id" }] }
+        ]
+      },
+      "validation": { "required": true }
+    },
+    {
+      "id": "range_a1",
+      "type": "string",
+      "label": "Range (A1 notation)",
+      "default": "A1:ZZZ1000",
+      "ui_options": { "placeholder": "e.g. A1:D100 or leave default" }
+    },
+    {
+      "id": "value_render_option",
+      "type": "string",
+      "label": "Value Render Option",
+      "enum": ["FORMATTED_VALUE", "UNFORMATTED_VALUE", "FORMULA"],
+      "default": "FORMATTED_VALUE"
+    },
+    {
+      "id": "include_header",
+      "type": "boolean",
+      "label": "Treat first row as headers",
+      "default": true
+    }
+  ],
+  "ui_options": {
+    "ui_order": ["spreadsheet_id", "sheet_name", "range_a1", "value_render_option", "include_header"]
+  }
+}
