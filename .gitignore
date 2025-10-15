@@ -32,3 +32,4 @@ build/
 *.egg-info/ 
 
 config/.env
+.env
