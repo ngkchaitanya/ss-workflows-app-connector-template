@@ -1,0 +1,49 @@
+{
+  "metadata": { "workflows_module_schema_version": "1.0.0" },
+  "fields": [
+    {
+      "id": "spreadsheet_id",
+      "type": "object",
+      "label": "Spreadsheet",
+      "ui_options": { "ui_widget": "SelectWidget", "refresh_on_change": true, "placeholder": "Select a spreadsheet" },
+      "choices": { "values": [] },
+      "content": { "type": ["managed"], "content_objects": [{ "id": "spreadsheets" }] },
+      "validation": { "required": true }
+    },
+    {
+      "id": "sheet_name",
+      "type": "object",
+      "label": "Sheet / Tab",
+      "ui_options": { "ui_widget": "SelectWidget", "placeholder": "Select a tab" },
+      "choices": { "values": [] },
+      "content": {
+        "type": ["managed"],
+        "content_objects": [
+          { "id": "sheets", "content_object_depends_on_fields": [{ "id": "spreadsheet_id" }] }
+        ]
+      },
+      "validation": { "required": true }
+    },
+    {
+      "id": "row_index",
+      "type": "string",
+      "label": "Row index (1-based, header is 1)",
+      "ui_options": { "placeholder": "Leave empty to delete by match" }
+    },
+    {
+      "id": "match_key",
+      "type": "string",
+      "label": "Match Column (header)",
+      "ui_options": { "placeholder": "e.g. Email" }
+    },
+    {
+      "id": "match_value",
+      "type": "string",
+      "label": "Match Value",
+      "ui_options": { "placeholder": "e.g. john@example.com" }
+    }
+  ],
+  "ui_options": {
+    "ui_order": ["spreadsheet_id", "sheet_name", "row_index", "match_key", "match_value"]
+  }
+}
