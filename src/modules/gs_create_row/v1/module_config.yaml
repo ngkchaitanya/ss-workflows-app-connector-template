@@ -1,0 +1,3 @@
+module_settings:
+  module_name: "Google Sheets - Create Row"
+  module_description: "Add a new row to a Google Sheet"

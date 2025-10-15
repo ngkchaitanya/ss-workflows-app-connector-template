@@ -1,0 +1,40 @@
+{
+  "metadata": {
+    "workflows_module_schema_version": "1.0.0"
+  },
+  "fields": [
+    {
+      "type": "string",
+      "id": "spreadsheet_id",
+      "label": "Spreadsheet ID",
+      "validation": { "required": true }
+    },
+    {
+      "type": "string",
+      "id": "sheet_name",
+      "label": "Sheet Name (Tab)",
+      "validation": { "required": true }
+    },
+    {
+      "type": "string",
+      "id": "values_json",
+      "label": "Row Values (JSON Array)",
+      "default": "[[\"John\",\"Doe\",\"john@example.com\",25]]",
+      "ui_options": {
+        "ui_widget": "CodeblockWidget",
+        "ui_options": { "language": "json" }
+      },
+      "validation": { "required": true }
+    },
+    {
+      "type": "string",
+      "id": "value_input_option",
+      "label": "Value Input Option",
+      "enum": ["USER_ENTERED", "RAW"],
+      "default": "USER_ENTERED"
+    }
+  ],
+  "ui_options": {
+    "ui_order": ["spreadsheet_id", "sheet_name", "values_json", "value_input_option"]
+  }
+}

@@ -13,3 +13,8 @@ sentry-sdk[Flask]
 # Core
 pydantic>=2.0.0
 PyYAML>=6.0.1
+
+# Google Sheets
+google-auth==2.34.0
+cryptography==42.0.5
+rsa>=4.9
