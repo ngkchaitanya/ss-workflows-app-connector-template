@@ -4,31 +4,49 @@
   },
   "fields": [
     {
-      "type": "string",
       "id": "spreadsheet_id",
-      "label": "Spreadsheet ID",
-      "validation": { "required": true }
-    },
-    {
-      "type": "string",
-      "id": "sheet_name",
-      "label": "Sheet Name (Tab)",
-      "validation": { "required": true }
-    },
-    {
-      "type": "string",
-      "id": "values_json",
-      "label": "Row Values (JSON Array)",
-      "default": "[[\"John\",\"Doe\",\"john@example.com\",25]]",
-      "ui_options": {
-        "ui_widget": "CodeblockWidget",
-        "ui_options": { "language": "json" }
+      "type": "object",
+      "label": "Spreadsheet",
+      "ui_options": { "ui_widget": "SelectWidget", "refresh_on_change": true, "placeholder": "Select a spreadsheet" },
+      "choices": { "values": [] },
+      "content": {
+        "type": ["managed"],
+        "content_objects": [{ "id": "spreadsheets" }]
       },
       "validation": { "required": true }
     },
     {
+      "id": "sheet_name",
+      "type": "object",
+      "label": "Sheet / Tab",
+      "ui_options": { "ui_widget": "SelectWidget", "placeholder": "Select a tab" },
+      "choices": { "values": [] },
+      "content": {
+        "type": ["managed"],
+        "content_objects": [
+          {
+            "id": "sheets",
+            "content_object_depends_on_fields": [{ "id": "spreadsheet_id" }]
+          }
+        ]
+      },
+      "validation": { "required": true }
+    },
+    {
+      "id": "values_json",
       "type": "string",
+      "label": "Row Values (array of objects)",
+      "default": "[{\"First\":\"Sarah\",\"Last\":\"Kay\",\"Email\":\"s.kay@example.com\",\"Age\":29}]",
+      "ui_options": {
+        "ui_widget": "CodeblockWidget",
+        "ui_options": { "language": "json" },
+        "placeholder": "[{\"First\":\"John\",\"Last\":\"Doe\",\"Email\":\"john@example.com\",\"Age\":25}]"
+      },
+      "validation": { "required": true }
+    },
+    {
       "id": "value_input_option",
+      "type": "string",
       "label": "Value Input Option",
       "enum": ["USER_ENTERED", "RAW"],
       "default": "USER_ENTERED"

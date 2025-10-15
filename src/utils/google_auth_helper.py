@@ -13,7 +13,10 @@ from google.auth.crypt import _python_rsa as py_rsa  # type: ignore
 
 from workflows_cdk import ManagedError
 
-SCOPES = ["https://www.googleapis.com/auth/spreadsheets"]
+SCOPES = [
+    "https://www.googleapis.com/auth/spreadsheets",
+    "https://www.googleapis.com/auth/drive.readonly",
+]
 
 def _normalize_private_key(info: dict) -> dict:
     pk = info.get("private_key")
@@ -34,6 +37,10 @@ def get_service_account_token():
             raise ManagedError("Missing service account credentials (GS_SA_JSON not set)")
 
         info = _normalize_private_key(json.loads(sa_json))
+        sa_email = info.get("client_email")
+        if not sa_email:
+            raise ManagedError("Service account JSON missing 'client_email'")
+        print("[auth] using SA:", sa_email)
 
         # Build creds once, then force-replace signer with pure-Python signer
         base = service_account.Credentials.from_service_account_info(info, scopes=SCOPES)
@@ -44,10 +51,10 @@ def get_service_account_token():
             pass
 
         # Construct a pure-Python signer and new Credentials explicitly
-        signer = py_rsa.RSASigner.from_string(info["private_key"], info["client_email"])
+        signer = py_rsa.RSASigner.from_string(info["private_key"], sa_email)
         creds = service_account.Credentials(
             signer=signer,
-            service_account_email=info["client_email"],
+            service_account_email=sa_email,
             token_uri=info.get("token_uri", "https://oauth2.googleapis.com/token"),
             project_id=info.get("project_id"),
             scopes=SCOPES,
